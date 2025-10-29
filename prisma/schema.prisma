@@ -13,6 +13,9 @@ model Persoana {
   prenume   String
   cnp       String
   telefon   String
+  proprietarSrls Srl[] @relation("Proprietar")
+  coproprietarSrls Srl[] @relation("CoProprietar")
+  managerSrls Srl[] @relation("Manager")
 }
 
 model Srl {

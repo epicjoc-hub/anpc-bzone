@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { USERS } from "@/data/users";
+import type { Aviz } from "@/types";
 
-export default function AvizAddForm({ open, onClose, onSubmit }) {
+interface AvizFormProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { dataExpirare: string; oferitDe: string }) => void;
+}
+
+export default function AvizAddForm({ open, onClose, onSubmit }: AvizFormProps) {
   const [dataExpirare, setDataExpirare] = useState("");
   const [oferitDe, setOferitDe] = useState(USERS[0].name);
 
@@ -10,7 +17,7 @@ export default function AvizAddForm({ open, onClose, onSubmit }) {
     <Modal open={open} title="Adaugă Aviz" onClose={onClose}>
       <form
         className="flex flex-col gap-4"
-        onSubmit={e => {
+        onSubmit={(e: any) => {
           e.preventDefault();
           onSubmit({ dataExpirare, oferitDe });
         }}
@@ -22,7 +29,7 @@ export default function AvizAddForm({ open, onClose, onSubmit }) {
             required
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={dataExpirare}
-            onChange={e => setDataExpirare(e.target.value)}
+            onChange={(e: any) => setDataExpirare(e.target.value)}
           />
         </div>
         <div>
@@ -30,9 +37,9 @@ export default function AvizAddForm({ open, onClose, onSubmit }) {
           <select
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={oferitDe}
-            onChange={e => setOferitDe(e.target.value)}
+            onChange={(e: any) => setOferitDe(e.target.value)}
           >
-            {USERS.map(u => (
+            {USERS.map((u: any) => (
               <option key={u.name} value={u.name}>{u.name} ({u.grade})</option>
             ))}
           </select>
