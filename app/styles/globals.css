@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: theme('fontFamily.sans');
+  background: linear-gradient(120deg,#fffbe7 0%,#ffe9a7 100%);
+}

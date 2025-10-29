@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Persoana {
+  id        String  @id @default(uuid())
+  nume      String
+  prenume   String
+  cnp       String
+  telefon   String
+}
+
+model Srl {
+  id             String      @id @default(uuid())
+  nume           String
+  locatie        String
+  tip            String
+  proprietarId   String
+  coproprietarId String?
+  managerId      String?
+  proprietar     Persoana    @relation("Proprietar", fields: [proprietarId], references: [id])
+  coproprietar   Persoana?   @relation("CoProprietar", fields: [coproprietarId], references: [id])
+  manager        Persoana?   @relation("Manager", fields: [managerId], references: [id])
+  avize          Aviz[]
+  sanctiuni      Sanctiune[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Aviz {
+  id           String   @id @default(uuid())
+  srlId        String
+  srl          Srl      @relation(fields: [srlId], references: [id])
+  dataExpirare DateTime
+  oferitDe     String
+  createdAt    DateTime @default(now())
+}
+
+model Sanctiune {
+  id           String   @id @default(uuid())
+  srlId        String
+  srl          Srl      @relation(fields: [srlId], references: [id])
+  descriere    String
+  motiv        String
+  dataExpirare DateTime
+  oferitDe     String
+  createdAt    DateTime @default(now())
+}
