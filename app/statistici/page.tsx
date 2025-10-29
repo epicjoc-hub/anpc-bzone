@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
-function statisticiFromSRL(srluri) {
+function statisticiFromSRL(srluri: any[]) {
   const total = srluri.length;
-  const active = srluri.filter(s =>
+  const active = srluri.filter((s: any) =>
     s.avize && s.avize.length > 0 &&
     new Date(s.avize[s.avize.length - 1].dataExpirare) > new Date()
   ).length;
-  const sanc = srluri.filter(s => s.sanctiuni && s.sanctiuni.length > 0).length;
+  const sanc = srluri.filter((s: any) => s.sanctiuni && s.sanctiuni.length > 0).length;
   return { total, active, sanc };
 }
 

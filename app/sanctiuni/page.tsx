@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 export default function SanctiuniPage() {
-  const [sanctiuni, setSanctiuni] = useState([]);
+  const [sanctiuni, setSanctiuni] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("/api/sanctiuni").then(res => res.json()).then(setSanctiuni);

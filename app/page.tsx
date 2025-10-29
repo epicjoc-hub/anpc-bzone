@@ -1,36 +1,39 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import SrlCard from "@/components/SrlCard";
-import SRLAddForm from "@/components/SRLAddForm";
-import AvizAddForm from "@/components/AvizAddForm";
-import SanctiuneAddForm from "@/components/SanctiuneAddForm";
+import type { Srl } from "./types";
+import Sidebar from "./components/Sidebar";
+import SrlCard from "./components/SrlCard";
+import SRLAddForm from "./components/SRLAddForm";
+import AvizAddForm from "./components/AvizAddForm";
+import SanctiuneAddForm from "./components/SanctiuneAddForm";
 
 export default function Page() {
   const [showAdd, setShowAdd] = useState(false);
   const [showAviz, setShowAviz] = useState(false);
   const [showSanct, setShowSanct] = useState(false);
-  const [activeSrl, setActiveSrl] = useState(null);
-  const [srluri, setSrluri] = useState([]);
+  const [activeSrl, setActiveSrl] = useState<Srl | null>(null);
+  const [srluri, setSrluri] = useState<Srl[]>([]);
 
   // Fetch din API!
   useEffect(() => {
     fetch("/api/srl").then(res => res.json()).then(setSrluri);
   }, []);
 
-  async function handleAddSRL(newSRL) {
+  async function handleAddSRL(newSRL: any) {
     await fetch("/api/srl", { method: "POST", body: JSON.stringify(newSRL) });
     fetch("/api/srl").then(res => res.json()).then(setSrluri);
     setShowAdd(false);
   }
 
-  async function handleAddAviz(data) {
+  async function handleAddAviz(data: any) {
+    if (!activeSrl) return;
     await fetch("/api/aviz", { method: "POST", body: JSON.stringify({ ...data, srlId: activeSrl.id }) });
     fetch("/api/srl").then(res => res.json()).then(setSrluri);
     setShowAviz(false); setActiveSrl(null);
   }
 
-  async function handleAddSanctiune(data) {
+  async function handleAddSanctiune(data: any) {
+    if (!activeSrl) return;
     await fetch("/api/sanctiune", { method: "POST", body: JSON.stringify({ ...data, srlId: activeSrl.id }) });
     fetch("/api/srl").then(res => res.json()).then(setSrluri);
     setShowSanct(false); setActiveSrl(null);
@@ -57,7 +60,7 @@ export default function Page() {
           </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {srluri.map((srl) => (
+          {srluri.map((srl: Srl) => (
             <SrlCard
               key={srl.id}
               srl={srl}

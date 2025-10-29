@@ -1,13 +1,22 @@
 import { ExclamationTriangleIcon, CheckCircleIcon, ClockIcon, UserIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
+import type { Srl } from "../types";
 
 // Props: srl { nume, tip, locatie, proprietar {nume, prenume, cnp, telefon}, aviz, sanctiuni }
-export default function SrlCard({ srl, onAddAviz, onAddSanctiune }) {
+type AvizStatus = "green" | "yellow" | "red";
+
+interface SrlCardProps {
+  srl: any; // lightweight, can be refined
+  onAddAviz: () => void;
+  onAddSanctiune: () => void;
+}
+
+export default function SrlCard({ srl, onAddAviz, onAddSanctiune }: SrlCardProps) {
   // Determină starea avizului: verde, galben, roșu
   const now = new Date();
-  let avizStatus = "green";
+  let avizStatus: AvizStatus = "green";
   let avizText = "Aviz activ";
-  if (!srl.aviz || !srl.aviz.dataExpirare) {
+  if (!srl?.aviz || !srl?.aviz?.dataExpirare) {
     avizStatus = "red";
     avizText = "Fără aviz!";
   } else {
@@ -22,7 +31,7 @@ export default function SrlCard({ srl, onAddAviz, onAddSanctiune }) {
     }
   }
 
-  const statusColors = {
+  const statusColors: Record<AvizStatus, string> = {
     green: "from-green-300/40 to-green-100/60 border-green-700 shadow-green-300/40",
     yellow: "from-yellow-200/60 to-yellow-50 border-yellow-600 shadow-yellow-200/40",
     red: "from-red-200/60 to-red-50 border-red-600 shadow-red-300/40",
@@ -71,10 +80,10 @@ export default function SrlCard({ srl, onAddAviz, onAddSanctiune }) {
         </div>
         <div className="text-gray-700 flex flex-wrap gap-1">
           <b>Sancțiuni:</b>
-          {srl.sanctiuni.length === 0 ? (
+          {srl.sanctiuni && srl.sanctiuni.length === 0 ? (
             <span className="italic text-gray-400">Nicio sancțiune</span>
           ) : (
-            srl.sanctiuni.map((sanct, idx) => (
+            (srl.sanctiuni || []).map((sanct: any, idx: number) => (
               <span key={idx} className="px-2 py-0.5 rounded bg-red-200 text-red-800 text-xs font-bold shadow">
                 {sanct.descriere}
               </span>

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import { USERS } from "@/data/users";
 
-export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
+interface SanctiuneAddFormProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (data: { descriere: string; motiv: string; dataExpirare: string; oferitDe: string }) => void;
+}
+
+export default function SanctiuneAddForm({ open, onClose, onSubmit }: SanctiuneAddFormProps) {
   const [descriere, setDescriere] = useState("");
   const [motiv, setMotiv] = useState("");
   const [dataExpirare, setDataExpirare] = useState("");
@@ -12,7 +18,7 @@ export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
     <Modal open={open} title="Aplică Sancțiune" onClose={onClose}>
       <form
         className="flex flex-col gap-4"
-        onSubmit={e => {
+        onSubmit={(e: any) => {
           e.preventDefault();
           onSubmit({ descriere, motiv, dataExpirare, oferitDe });
         }}
@@ -23,7 +29,7 @@ export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
             required
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={descriere}
-            onChange={e => setDescriere(e.target.value)}
+            onChange={(e: any) => setDescriere(e.target.value)}
           />
         </div>
         <div>
@@ -32,7 +38,7 @@ export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
             required
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={motiv}
-            onChange={e => setMotiv(e.target.value)}
+            onChange={(e: any) => setMotiv(e.target.value)}
           />
         </div>
         <div>
@@ -42,7 +48,7 @@ export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
             required
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={dataExpirare}
-            onChange={e => setDataExpirare(e.target.value)}
+            onChange={(e: any) => setDataExpirare(e.target.value)}
           />
         </div>
         <div>
@@ -50,9 +56,9 @@ export default function SanctiuneAddForm({ open, onClose, onSubmit }) {
           <select
             className="w-full px-4 py-2 rounded-lg border border-[#bfa042]/40 bg-white/80 focus:ring-2 focus:ring-[#bfa042] transition"
             value={oferitDe}
-            onChange={e => setOferitDe(e.target.value)}
+            onChange={(e: any) => setOferitDe(e.target.value)}
           >
-            {USERS.map(u => (
+            {USERS.map((u: any) => (
               <option key={u.name} value={u.name}>{u.name} ({u.grade})</option>
             ))}
           </select>
