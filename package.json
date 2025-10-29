@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "postinstall": "prisma generate",
+    "vercel-build": "sh ./scripts/vercel-build.sh"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
